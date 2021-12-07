@@ -1,96 +1,51 @@
+<style>
+  .hidden {
+    display: none;
+  }
+</style>
+
+<header>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/profile" class="hidden">Profile</a>
+    <a href="/login" class="hidden">Login</a>
+    <a href="#logout" id="logout" class="hidden">Logout</a>
+  </nav>
+</header>
+
 <!-- 1. Get Magic SDK -->
-<script src="https://cdn.jsdelivr.net/npm/magic-sdk/dist/magic.js"></script>
+<script src="https://auth.magic.link/sdk"></script>
 <!-- 2. Initialize Magic -->
 <script>
-  const magic = new Magic("pk_test_C156DE7D708EC067"); // Your public key
-</script>
+  const magic = new Magic("pk_live_2D06A74CFC4635C6");
 
-<!-- 3. Add loader to wait for Magic SDK -->
-<div id="loader" class="loader">
-  <img src="https://uploads-ssl.webflow.com/5fea770e7aaf96ddaa86827a/5fea8840f0097516e5f5f931_wSdvIvS.gif" class="loaderImage"/>
-</div>
+  const logoutLink = document.querySelector('#logout');
+  
+  logoutLink.addEventListener('click', async (event) => {
+    event.preventDefault();
 
-<!-- 4. Create our Navigation links -->
-<a id="home" href="/">Home</a> ♡
-<a id="profile" href="/profile">Profile</a> ♡
-<a id="login" href="/login">Login</a> ♡
-<button id="logout" onclick="logout()">Logout</button>
+    await magic.user.logout();
 
-<!-- 5. Update visible pages depending on whether or not the user is logged in -->
-<script>
+    window.location.href = '/';
+  });
 
-  let privatePages = ['/profile', '/', '/logout'];
+  async function updateNav() {
+    const isLoggedIn = await magic.user.isLoggedIn();
 
-  let publicPages = ['/login']
+    const profile = document.querySelector('[href="/profile"]');
+    const login = document.querySelector('[href="/login"]');
+    const logout = document.querySelector('#logout');
 
-  const loginElement = document.querySelector("#login")
-  const profileElement = document.querySelector("#profile")
-  const logoutElement = document.querySelector("#logout")
-  const homeElement = document.querySelector("#home")
-  const loaderElement = document.querySelector("#loader")
-
-  // Get the user & check whether or not they'required logged in.
-  // Show or hide pages depending on the outcome.
-  const getUser = async () => {
-
-    // Gets the page user is currently on
-    const currentPath = window.location.pathname;
-
-    // Checks if user is currently logged into the Magic SDK
-    const isLoggedIn = await magic
-      .user
-      .isLoggedIn();
-
-    // If the user is logged in...
     if (isLoggedIn) {
-
-      // ...prevent them from accessing public pages.
-      if (publicPages.includes(currentPath)) {
-        window
-          .location
-          .replace('/');
-      } else {
-        // Or hide links they don’t need to see
-        loginElement.style.display = 'none';
-        // Get rid of the loader once the user reaches the correct page
-        loaderElement.style.display = 'none';
-      }
+      profile.classList.remove('hidden');
+      logout.classList.remove('hidden');
+      login.classList.add('hidden');
     } else {
-
-      // If a logged out user tries to to access a private page, send them back to the login page
-      if (privatePages.includes(currentPath)) {
-        window
-          .location
-          .replace('/login');
-      } else {
-
-        // Hide links logged out users shouldn't be able to see
-        profileElement.style.display = 'none';
-        logoutElement.style.display = 'none';
-        homeElement.style.display = 'none';
-        // Get rid of the loader once the user reaches the correct page
-        loader.style.display = 'none';
-      }
+      profile.classList.add('hidden');
+      logout.classList.add('hidden');
+      login.classList.remove('hidden');
     }
-  };
-
-  getUser();
-</script>
-
-<!-- 6. Log out the currently authenticated Magic user -->
-<script>
-  const logout = async () => {
-    try {
-      await magic
-        .user
-        .logout();
-      window
-        .location
-        .replace("http://localhost:8080/login");
-    } catch (error) {
-      // Handle errors if required!
-      console.log('Ran into this error while logging out: ', error);
-    }
-    console.log('WHOO! User has logged out of all Magic SDK sessions.');
   }
+
+  updateNav();
 </script>

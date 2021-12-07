@@ -1,6 +1,6 @@
 ---
-title: "Profile"
-layout: "base.njk"
+title: 'Profile'
+layout: 'base.njk'
 templateEngineOverride: njk,md
 ---
 
@@ -10,19 +10,20 @@ templateEngineOverride: njk,md
 
 <!-- 1. Ensure the user’s info is displayed -->
 <script>
-// Assumes a user is already logged in
-const displayUserInfo = async () => {
-  let emailElement = document.getElementById('email');
-  let publicAddressElement = document.getElementById('publicAddress');
-  try {
-    const { email, publicAddress } = await magic.user.getMetadata();
-    emailElement.innerHTML = email;
-    publicAddressElement.innerHTML = publicAddress;
-    } catch {
-      // Handle errors if required!
-      emailElement.innerHTML = "DNE";
-      publicAddressElement.innerHTML = "DNE";
-      }
-      }
-      displayUserInfo();
+  // check that the user is logged in
+  async function checkLogin() {
+    const isLoggedIn = await magic.user.isLoggedIn();
+    console.log({ isLoggedIn })
+    if (!isLoggedIn) {
+      window.location.href = '/login';
+    }
+
+    // get the user's email
+    const { email, publicAddress} = await magic.user.getMetadata();
+
+    document.querySelector('#email').innerText = email;
+    document.querySelector('#publicAddress').innerText = publicAddress;
+  }
+
+  checkLogin();
 </script>
