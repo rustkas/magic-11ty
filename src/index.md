@@ -3,12 +3,11 @@ title: "My Cool Blog"
 layout: "base.njk"
 templateEngineOverride: "njk.md"
 ---
-```
+
 <!-- 0. HTML -->
-```
+
 
 ## Articles
-```
 <div id="content">
 </div>
 
@@ -31,4 +30,4 @@ templateEngineOverride: "njk.md"
       contentElement.innerHTML = loginMessage;
       }
 </script>
-```
+

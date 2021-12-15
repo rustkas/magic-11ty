@@ -4,7 +4,7 @@ layout: 'base.njk'
 templateEngineOverride: "njk.md"
 ---
 
-```
+
 <!-- 0. HTML -->
 <form id="form">
     <label for="input">Email address</label>
@@ -39,4 +39,4 @@ templateEngineOverride: "njk.md"
 
     form.addEventListener('submit', handleLogin);
 </script>
-```
+

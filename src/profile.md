@@ -4,7 +4,7 @@ layout: 'base.njk'
 templateEngineOverride: "njk.md"
 ---
 
-```
+
 <!-- 0. HTML -->
 <h3>Welcome 👇🏼</h3><h3 id="email"></h3>
 <h3>Public Address 👇🏼</h3><h3 id="publicAddress"></h3>
@@ -28,4 +28,4 @@ templateEngineOverride: "njk.md"
 
   checkLogin();
 </script>
-```
+

@@ -28,17 +28,18 @@
 <script src="https://auth.magic.link/sdk"></script>
 <!-- 2. Initialize Magic -->
 <script>
-  const magic = new Magic("pk_live_2D06A74CFC4635C6");
+  const magic = new Magic("pk_live_1AB0383F6C1716E9");
 
   const logoutLink = document.querySelector('#logout');
-  
-  logoutLink.addEventListener('click', async (event) => {
-    event.preventDefault();
+	if(logoutLink){
+		logoutLink.addEventListener('click', async (event) => {
+			event.preventDefault();
 
-    await magic.user.logout();
+			await magic.user.logout();
 
-    window.location.href = '/';
-  });
+			window.location.href = '/';
+		});
+	}
 
   async function updateNav() {
     const isLoggedIn = await magic.user.isLoggedIn();
@@ -56,22 +57,24 @@
       logout.classList.add('hidden');
       login.classList.remove('hidden');
     }
-  }
+  }();
 
-  updateNav();
 </script>
 
 
 
     <h1>Login</h1>
 
-    <!-- 0. HTML -->
+    
+
+<!-- 0. HTML -->
 <form id="form">
     <label for="input">Email address</label>
     <input id="input" type="email" />
     <button type="submit">Login</button>
 </form>
 <div id="result">
+
 <!-- 1. Use loginWithMagicLink to authenticate user -->
 <script>
     const form = document.querySelector('#form');
@@ -98,6 +101,7 @@
 
     form.addEventListener('submit', handleLogin);
 </script>
+
 
 
 </body>
