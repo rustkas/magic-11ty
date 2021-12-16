@@ -115,26 +115,6 @@ const magic = new Magic('pk_test_C156DE7D708EC067');
 
     <!-- 0. HTML -->
 <p><button type="submit" id="logOutLink">Logout</button></p>
-<!-- 3. Log out the currently authenticated Magic user. -->
-<script>
-  const logOut3 = async () => {
-    try {
-      const isLoggedIn = await magic.user.isLoggedIn();
-      await magic.user.logout();
-      window.location.replace("http://localhost:8080/login");
-    } catch (error) {
-      // Handle errors if required!
-      console.log('Ran into this error while logging out: ', error);
-    }
-    console.log('WHOO! User has logged out of all Magic SDK sessions.');
-  }
-  
-  // Call the logOut function when the user
-  // clicks the Log Out Nav Link.
-	const logOutLink3 = document.querySelector("#logout")
-  logOutLink3.addEventListener('click', logOut3);
-</script>
-
 
 </body>
 </html>
